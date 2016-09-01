@@ -78,8 +78,21 @@ class ViewController: UIViewController, FusumaDelegate {
         self.presentViewController(alert, animated: true, completion: nil)
     }
     
+    func fusumaCameraUnauthorized(fusuma: FusumaViewController) {
+        print("Camera unauthorized")
+        let alert = UIAlertController(title: "Access Requested", message: "Take photo needs to access your camera", preferredStyle: .Alert)
+        alert.addAction(UIAlertAction(title: "Settings", style: .Default, handler: { (action) -> Void in
+            if let url = NSURL(string:UIApplicationOpenSettingsURLString) {
+                UIApplication.sharedApplication().openURL(url)
+            }
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { (action) -> Void in
+            
+        }))
+        fusuma.presentViewController(alert, animated: true, completion: nil)
+    }
+    
     func fusumaClosed() {
-     
         print("Called when the close button is pressed")
     }
 

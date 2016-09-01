@@ -15,7 +15,7 @@ import Photos
     optional func fusumaDismissedWithImage(image: UIImage)
     func fusumaVideoCompleted(withFileURL fileURL: NSURL)
     func fusumaCameraRollUnauthorized()
-    
+    func fusumaCameraUnauthorized(fusuma: FusumaViewController)
     optional func fusumaClosed()
 }
 
@@ -262,7 +262,11 @@ public final class FusumaViewController: UIViewController {
     }
     
     @IBAction func photoButtonPressed(sender: UIButton) {
-    
+        let status = AVCaptureDevice.authorizationStatusForMediaType(AVMediaTypeVideo)
+        if status != AVAuthorizationStatus.Authorized {
+            delegate?.fusumaCameraUnauthorized(self)
+            return
+        }
         changeMode(Mode.Camera)
     }
     
