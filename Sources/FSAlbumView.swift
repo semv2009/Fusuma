@@ -240,7 +240,7 @@ final class FSAlbumView: UIView, UICollectionViewDataSource, UICollectionViewDel
         let asset = self.images[indexPath.item] as! PHAsset
         self.imageManager?.requestImageForAsset(asset,
             targetSize: cellSize,
-            contentMode: .AspectFill,
+            contentMode: .AspectFit,
             options: nil) {
                 result, info in
                 
