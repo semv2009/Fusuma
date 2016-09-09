@@ -271,12 +271,18 @@ public final class FusumaViewController: UIViewController {
     }
     
     @IBAction func videoButtonPressed(sender: UIButton) {
-        
         changeMode(Mode.Video)
     }
     
     @IBAction func doneButtonPressed(sender: UIButton) {
         let view = albumView.imageCropView
+        
+        guard let _ = view.imageView.image else {
+            let alert = UIAlertController(title: "Oops", message: "Please select a photo", preferredStyle: .Alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: nil))
+            self.presentViewController(alert, animated: true, completion: nil)
+            return
+        }
 
         if fusumaCropImage {
             let normalizedX = view.contentOffset.x / view.contentSize.width
@@ -341,6 +347,10 @@ extension FusumaViewController: FSAlbumViewDelegate, FSCameraViewDelegate, FSVid
     // MARK: FSAlbumViewDelegate
     public func albumViewCameraRollUnauthorized() {
         delegate?.fusumaCameraRollUnauthorized()
+    }
+    
+    public func emptyPhotoAsset() {
+        doneButton.enabled = false
     }
     
     func videoFinished(withFileURL fileURL: NSURL) {

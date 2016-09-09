@@ -12,6 +12,7 @@ import Photos
 @objc public protocol FSAlbumViewDelegate: class {
     
     func albumViewCameraRollUnauthorized()
+    func emptyPhotoAsset()
 }
 
 final class FSAlbumView: UIView, UICollectionViewDataSource, UICollectionViewDelegate, PHPhotoLibraryChangeObserver, UIGestureRecognizerDelegate {
@@ -93,6 +94,8 @@ final class FSAlbumView: UIView, UICollectionViewDataSource, UICollectionViewDel
             changeImage(images[0] as! PHAsset)
             collectionView.reloadData()
             collectionView.selectItemAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), animated: false, scrollPosition: UICollectionViewScrollPosition.None)
+        } else {
+            delegate?.emptyPhotoAsset()
         }
         
         PHPhotoLibrary.sharedPhotoLibrary().registerChangeObserver(self)
